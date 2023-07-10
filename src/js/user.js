@@ -1,33 +1,18 @@
-import Character from './basic';
-
-
 export default class Team {
-  constructor(characters) {
-    this.characters = characters;
+  constructor() {
+    this.characters = new Set();
   }
 
-  // это генератор
-  // и здесь есть доступ к this
-  // остаётся лишь правильно написать yield
-
-  * [Symbol.iterator]() {
-    let i = 0;
+  [Symbol.iterator]() {
     const chars = this.characters;
-
-    yield {
+    let i = 0;
+    return {
       next() {
+        i += 1;
         if (i < chars.length) {
-          const n = i++;
           return {
             done: false,
-            value: new Character(
-              chars[n].name,
-              chars[n].type,
-              chars[n].health,
-              chars[n].level,
-              chars[n].attack,
-              chars[n].defence,
-            ),
+            value: chars[i - 1],
           };
         }
         return { done: true };
